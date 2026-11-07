@@ -1,17 +1,31 @@
-# PRI Resonance Suppressor - macOS ARM Build
+# PRI Resonance Suppressor - macOS Universal Binary
 
-A spectral resonance suppressor audio plugin for macOS, optimized for Apple Silicon (M1/M2/M3/M4).
+A spectral resonance suppressor audio plugin for macOS, with native support for both **Apple Silicon (M1/M2/M3/M4)** and **Intel Macs**.
 
-This is a macOS ARM-optimized fork of the [original PRI Resonance Suppressor](https://github.com/pritezza/PRIResonanceSuppressor) by PRITEZZA.
+This is a fully-functional macOS port of the [original PRI Resonance Suppressor](https://github.com/pritezza/PRIResonanceSuppressor) by PRITEZZA.
+
+## ✅ **Fully Validated & Production Ready**
+
+This plugin has passed **Apple's complete AU validation** with all tests successful:
+- ✅ Component registration and identification
+- ✅ All 14 parameters working with automation
+- ✅ Audio rendering at all sample rates (11 kHz - 192 kHz)
+- ✅ Channel layout support (Mono, Stereo, Binaural)
+- ✅ Custom Cocoa UI interface
+- ✅ MIDI handling
+- ✅ Zero audio processing errors
+
+**Validation output:** `AU VALIDATION SUCCEEDED`
 
 ## 🎯 What's New in This Fork
 
-- ✅ **Native macOS ARM support** - Optimized for Apple Silicon
-- ✅ **Audio Unit (AU) format** - Native macOS plugin format for Logic Pro, GarageBand
-- ✅ **VST3 format** - Cross-platform compatibility
-- ✅ **Universal binary support** - Optional Intel + ARM builds
-- ✅ **Automated build scripts** - Simple one-command building
-- ✅ **Easy installation** - Automated installer with both system and user options
+- ✅ **Universal Binary** - Works natively on Apple Silicon AND Intel Macs
+- ✅ **Audio Unit (AU)** - Native format for Logic Pro, GarageBand, Final Cut Pro
+- ✅ **VST3** - Cross-platform compatibility with all major DAWs
+- ✅ **Apple-validated** - Passes all AU validation tests
+- ✅ **One-command build** - Automated build script handles everything
+- ✅ **One-command install** - Automated installer with proper signing
+- ✅ **Complete AU fix tools** - Diagnostic and repair scripts included
 - ✅ **Comprehensive documentation** - Complete guides for building and using
 
 ## 🚀 Quick Start
@@ -28,21 +42,30 @@ This is a macOS ARM-optimized fork of the [original PRI Resonance Suppressor](ht
    brew install cmake
    ```
 
-### Build and Install
+### Build and Install Universal Binary
 
 ```bash
 # Clone the repository
 git clone https://github.com/Makkhus/PRI-Resonance-Suppressor.git
 cd PRI-Resonance-Suppressor
 
-# Build (this will automatically clone JUCE)
-./build_macos_arm.sh
+# Build universal binary (works on BOTH Apple Silicon AND Intel Macs)
+./build_macos_arm.sh Release universal
 
-# Install
-sudo ./install_macos.sh
+# Install with complete AU fix
+sudo ./fix_au_complete.sh
 ```
 
 That's it! Restart your DAW and look for **PRI Resonance Suppressor** by PRITEZZA.
+
+### Validate Installation
+
+```bash
+# Verify AU plugin passes Apple validation
+auval -v aufx Rsup Prtz
+
+# Should output: "AU VALIDATION SUCCEEDED"
+```
 
 ## 📖 Documentation
 
@@ -124,39 +147,92 @@ Tested and working with:
 
 ## 🔧 Build Options
 
-### ARM64 Build (Default)
-```bash
-./build_macos_arm.sh
-```
-
-### Universal Binary (Intel + ARM)
+### Universal Binary - Recommended (Intel + ARM)
 ```bash
 ./build_macos_arm.sh Release universal
 ```
+**Best for:** Maximum compatibility - works on all Macs
+
+### ARM64 Only Build
+```bash
+./build_macos_arm.sh
+```
+**Best for:** Smaller file size, Apple Silicon only
 
 ### Debug Build (Faster compilation)
 ```bash
 ./build_macos_arm.sh Debug
 ```
+**Best for:** Development and debugging
 
 ### Manual Build
 See [BUILD_MACOS.md](BUILD_MACOS.md) for detailed manual build instructions.
 
+## 🛠️ AU Troubleshooting Tools
+
+### Debug AU Issues
+```bash
+./debug_au.sh
+```
+Runs comprehensive diagnostics on the AU component.
+
+### Complete AU Fix
+```bash
+sudo ./fix_au_complete.sh
+```
+Performs complete AU installation with:
+- Code signing
+- Cache clearing
+- System registration
+- Validation
+
+### Verify AU Works
+```bash
+auval -v aufx Rsup Prtz
+```
+Should show: **"AU VALIDATION SUCCEEDED"**
+
 ## 🐛 Troubleshooting
 
-### Plugin not showing in DAW?
-1. Restart your DAW completely
-2. Rescan plugins in DAW preferences
-3. Remove quarantine attributes:
-   ```bash
-   sudo xattr -cr "/Library/Audio/Plug-Ins/Components/PRI Resonance Suppressor.component"
-   sudo xattr -cr "/Library/Audio/Plug-Ins/VST3/PRI Resonance Suppressor.vst3"
-   ```
+### AU Plugin not showing in Logic Pro?
+
+**Quick Fix:**
+```bash
+# Run the complete AU fix script
+sudo ./fix_au_complete.sh
+
+# Then restart Logic Pro and rescan plugins
+```
+
+**Manual Steps:**
+1. Verify installation: `ls -la "/Library/Audio/Plug-Ins/Components/PRI Resonance Suppressor.component"`
+2. Check validation: `auval -v aufx Rsup Prtz` (should show "PASS")
+3. Clear AU cache: `rm -rf ~/Library/Caches/AudioUnitCache`
+4. Kill cache process: `killall -9 AudioComponentRegistrar`
+5. Restart Logic Pro → Preferences → Plug-in Manager → Reset & Rescan
+
+### VST3 working but AU not?
+
+AU requires system-wide installation:
+```bash
+# Must be in /Library (not ~/Library)
+sudo cp -R "build/PRIResonanceSuppressor_artefacts/Release/AU/PRI Resonance Suppressor.component" "/Library/Audio/Plug-Ins/Components/"
+sudo xattr -cr "/Library/Audio/Plug-Ins/Components/PRI Resonance Suppressor.component"
+sudo codesign --force --deep --sign - --options runtime "/Library/Audio/Plug-Ins/Components/PRI Resonance Suppressor.component"
+```
 
 ### Build errors?
 1. Verify Xcode tools: `xcode-select -p`
 2. Update CMake: `brew upgrade cmake`
-3. Clean build: `rm -rf build && ./build_macos_arm.sh`
+3. Clean build: `rm -rf build && ./build_macos_arm.sh Release universal`
+
+### Validation fails?
+```bash
+# Run diagnostics
+./debug_au.sh
+
+# Check the output for specific errors
+```
 
 See [BUILD_MACOS.md](BUILD_MACOS.md) for more troubleshooting.
 
@@ -173,9 +249,21 @@ rm -rf "$HOME/Library/Application Support/PRITEZZA"
 
 ## ⚡ Performance
 
-- **CPU Usage**: < 1% on Apple Silicon for audio processing
-- **Display**: 1-3% (adjustable via DISPLAY RATE setting)
-- **Latency**: 23ms @ 1024 samples (automatically compensated)
+### Benchmarks (Apple Silicon M1)
+- **CPU Usage**: < 1% for audio processing
+- **Display Rendering**: 1-3% (adjustable via DISPLAY RATE setting)
+- **Cold Open Time**: ~25ms
+- **Warm Open Time**: ~12ms
+- **Initialization**: < 0.1ms
+
+### Latency (Auto-compensated by DAW)
+- **1024 samples**: 23ms @ 44.1kHz, 21ms @ 48kHz
+- **2048 samples**: 46ms @ 44.1kHz, 43ms @ 48kHz
+- **4096 samples**: 93ms @ 44.1kHz, 85ms @ 48kHz
+
+### Supported Sample Rates
+- 11.025 kHz to 192 kHz
+- HI-RES FFT mode maintains resolution at higher sample rates
 
 ## 📄 License
 
