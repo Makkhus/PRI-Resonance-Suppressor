@@ -17,7 +17,7 @@
 
 **This Repository:** macOS port with universal binary support (Apple Silicon + Intel)
 
-**Port Author:** Makkhus (FVCKBOI)
+**Port Author:** FVCKBOI
 
 **Release Info:**
 - **Version:** 1.0.0
