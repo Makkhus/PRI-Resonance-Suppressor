@@ -1,221 +1,231 @@
-# PRI Resonance Suppressor - macOS Universal Binary
+# PRI Resonance Suppressor
 
-A spectral resonance suppressor audio plugin for macOS, with native support for both **Apple Silicon (M1/M2/M3/M4)** and **Intel Macs**.
+**Professional Spectral Resonance Suppressor for macOS**
 
-This is a fully-functional macOS port of the [original PRI Resonance Suppressor](https://github.com/pritezza/PRIResonanceSuppressor) by PRITEZZA.
+A powerful audio plugin that automatically detects and reduces harsh resonances, ringing frequencies, and unwanted peaks in your audio—all in real-time with visual feedback.
 
-## ✅ **Fully Validated & Production Ready**
+[![macOS](https://img.shields.io/badge/macOS-11%2B-blue)](https://www.apple.com/macos/)
+[![Universal](https://img.shields.io/badge/Universal-Intel%20%2B%20Apple%20Silicon-green)](https://github.com/Makkhus/PRI-Resonance-Suppressor/releases)
+[![License](https://img.shields.io/badge/License-AGPLv3-blue)](LICENSE)
+[![Validated](https://img.shields.io/badge/Apple-Validated-brightgreen)](https://github.com/Makkhus/PRI-Resonance-Suppressor)
 
-This plugin has passed **Apple's complete AU validation** with all tests successful.
+---
 
-**Validation output:** `AU VALIDATION SUCCEEDED`
+## 📥 Download
 
-## 🎯 What's Included
+### [⬇️ Download Latest Release (v1.0.0)](https://github.com/Makkhus/PRI-Resonance-Suppressor/releases/latest)
 
-- ✅ **Audio Unit (AU)** - Native format for Logic Pro, GarageBand, Final Cut Pro
-- ✅ **VST3** - Cross-platform compatibility with all major DAWs
-- ✅ **Universal Binary** - Works natively on Apple Silicon AND Intel Macs
-- ✅ **Apple-validated** - Passes all AU validation tests
-- ✅ **Professional PKG installer** - Native macOS installation wizard
+**System Requirements:**
+- macOS 11.0 (Big Sur) or later
+- Apple Silicon (M1/M2/M3/M4) or Intel processor
+- Compatible DAW with AU or VST3 support
+
+**File Size:** ~10 MB
+
+---
 
 ## 🚀 Installation
 
-### Download the Installer
+1. Download `PRI-Resonance-Suppressor-1.0.0-macOS.pkg` from the [Releases page](https://github.com/Makkhus/PRI-Resonance-Suppressor/releases)
+2. Double-click the downloaded `.pkg` file
+3. Follow the installation wizard
+4. Enter your password when prompted
+5. Restart your DAW
 
-Download the latest release from the [Releases page](https://github.com/Makkhus/PRI-Resonance-Suppressor/releases):
+**Installation Locations:**
+- Audio Unit: `/Library/Audio/Plug-Ins/Components/`
+- VST3: `/Library/Audio/Plug-Ins/VST3/`
 
-**[PRI-Resonance-Suppressor-1.0.0-macOS.pkg](https://github.com/Makkhus/PRI-Resonance-Suppressor/releases)** (~10 MB)
-
-### Install
-
-1. **Download** the .pkg file
-2. **Double-click** to open the installer
-3. **Follow** the installation wizard
-4. **Restart** your DAW
-
-The installer will automatically:
-- ✅ Install Audio Unit to `/Library/Audio/Plug-Ins/Components/`
-- ✅ Install VST3 to `/Library/Audio/Plug-Ins/VST3/`
-- ✅ Sign the plugins
-- ✅ Clear AU cache
-- ✅ Set proper permissions
-
-### Verify Installation
-
-Open Terminal and run:
-```bash
-auval -v aufx Rsup Prtz
-```
-
-You should see: **"AU VALIDATION SUCCEEDED"**
-
-## 📖 Documentation
-
-- **[README.ja.md](README.ja.md)** - Japanese README (original)
-- **[Source Code](Source/)** - Plugin source code
-- **[Original Repository](https://github.com/pritezza/PRIResonanceSuppressor)** - Windows version
+---
 
 ## ✨ Features
 
-### Smart Resonance Detection
-- Automatically finds and reduces harsh frequencies, ringing, and whistling
-- Follows the sound dynamically - no fixed EQ cuts
-- Compares every frequency with its neighbors in real-time
+### Intelligent Resonance Detection
+Smart algorithm analyzes your audio spectrum in real-time, identifying narrow peaks that stick out from the surrounding frequencies.
 
-### Flexible Controls
-- **Detection Range**: Set LOW and HIGH frequency boundaries (25 Hz - 20 kHz)
-- **WIDTH**: How narrow a peak must be (1/3 - 1/48 octave)
-- **THRESHOLD**: How far a peak must stick out (1 - 20 dB)
-- **DEPTH**: Maximum reduction amount (1 - 24 dB)
-- **ATTACK/RELEASE**: Speed of reduction (1-200ms / 10-2000ms)
+### Dynamic Processing
+Unlike static EQ, PRI Resonance Suppressor adapts to your audio—reducing only what's harsh, only when it's harsh.
 
-### Visual Feedback
-- **Real-time spectrum analyzer** showing input, output, and reduction
-- **Three themes**: Vintage, Black, Silver
-- **Resizable UI**: 50% to 150% scaling
-- **Δ LISTEN mode**: Solo the removed frequencies
+### Real-Time Visualization
+Built-in spectrum analyzer displays input, output, and reduction amount at every frequency, making it easy to see exactly what's being processed.
 
-### Stereo Processing
-- **LINKED**: Same reduction on both channels (default)
-- **L/R**: Left and right processed independently
-- **M/S**: Mid and side processed independently
+### Professional Controls
+- **14 Automatable Parameters** - Full DAW integration
+- **Detection Range** - Set LOW/HIGH frequency boundaries (25 Hz - 20 kHz)
+- **Width Control** - Adjust peak narrowness detection (1/3 - 1/48 octave)
+- **Threshold** - Set sensitivity (1 - 20 dB)
+- **Depth** - Control maximum reduction (1 - 24 dB)
+- **Attack/Release** - Shape reduction timing (1-200ms / 10-2000ms)
+- **Δ Listen Mode** - Solo what's being removed
+- **Stereo Modes** - Linked, L/R, or M/S processing
 
-## 🎵 Common Use Cases
+### Customizable Interface
+- Three visual themes (Vintage, Black, Silver)
+- Resizable from 50% to 150%
+- High-resolution display support
 
-**Vocal De-Essing:**
-```
-LOW: 4kHz | HIGH: 10kHz | WIDTH: 1/6 | THRESHOLD: 6dB | DEPTH: 12dB
-```
+---
 
-**Acoustic Guitar Harshness:**
-```
-LOW: 2kHz | HIGH: 8kHz | WIDTH: 1/12 | THRESHOLD: 4dB | DEPTH: 9dB
-```
+## 🎛️ Compatible DAWs
 
-**Overhead Cymbal Control:**
-```
-LOW: 5kHz | HIGH: 15kHz | WIDTH: 1/6 | THRESHOLD: 6dB | DEPTH: 15dB
-```
-
-**General Mix Polish:**
-```
-LOW: 1kHz | HIGH: 16kHz | WIDTH: 1/6 | THRESHOLD: 8dB | DEPTH: 6dB | MIX: 50%
-```
-
-## 🎛️ DAW Compatibility
-
-Tested and working with:
-- Logic Pro (AU)
-- Ableton Live (VST3/AU)
-- FL Studio (VST3/AU)
-- Reaper (VST3/AU)
-- Pro Tools 2023.6+ (VST3/AU)
+**Fully Tested:**
+- Logic Pro (Audio Unit)
+- GarageBand (Audio Unit)
+- Ableton Live (AU & VST3)
+- FL Studio (AU & VST3)
+- Reaper (AU & VST3)
+- Pro Tools 2023.6+ (AU & VST3)
 - Cubase (VST3)
-- Studio One (VST3/AU)
+- Studio One (AU & VST3)
 
-## 📍 Installation Locations
+Works with any DAW supporting Audio Unit or VST3 plugins.
 
-### Audio Unit (AU)
-- System: `/Library/Audio/Plug-Ins/Components/`
-- User: `~/Library/Audio/Plug-Ins/Components/`
+---
 
-### VST3
-- System: `/Library/Audio/Plug-Ins/VST3/`
-- User: `~/Library/Audio/Plug-Ins/VST3/`
+## 🎯 Common Applications
 
-### Settings
-- `~/Library/Application Support/PRITEZZA/PRIResonanceSuppressor.settings`
+### Vocal Processing
+Remove sibilance and harsh resonances while preserving clarity
+```
+Preset: LOW 4kHz | HIGH 10kHz | THRESHOLD 6dB | DEPTH 12dB
+```
+
+### Acoustic Instruments
+Tame harshness in guitars, pianos, and strings
+```
+Preset: LOW 2kHz | HIGH 8kHz | THRESHOLD 4dB | DEPTH 9dB
+```
+
+### Drum Overheads
+Control ringing cymbals and metallic resonances
+```
+Preset: LOW 5kHz | HIGH 15kHz | THRESHOLD 6dB | DEPTH 15dB
+```
+
+### Mix Bus Processing
+Smooth overall harshness for a polished mix
+```
+Preset: LOW 1kHz | HIGH 16kHz | THRESHOLD 8dB | DEPTH 6dB | MIX 50%
+```
+
+---
+
+## 💻 Technical Specifications
+
+**Plugin Formats:**
+- Audio Unit (AU) - Native macOS format
+- VST3 - Industry standard
+
+**Architecture:**
+- Universal Binary (Apple Silicon + Intel)
+- Native performance on all Mac processors
+
+**Audio Performance:**
+- CPU Usage: < 1% (typical on Apple Silicon)
+- Sample Rates: 11.025 kHz - 192 kHz
+- Latency: 23-93ms (automatically compensated)
+- Bit Depth: 32-bit floating point
+
+**Validation:**
+- ✅ Passed Apple's complete AU validation suite
+- ✅ Zero audio processing errors
+- ✅ Full automation support
+- ✅ Professional audio quality
+
+---
 
 ## 🐛 Troubleshooting
 
-### Plugin not showing in DAW?
+### Plugin Not Appearing in DAW
 
-1. **Restart your DAW completely**
-
-2. **For Logic Pro:**
-   - Open Logic Pro → Preferences → Plug-in Manager
-   - Click "Reset & Rescan Selection"
-
-3. **Verify installation:**
+1. **Verify Installation:**
    ```bash
-   ls -la "/Library/Audio/Plug-Ins/Components/PRI Resonance Suppressor.component"
-   ls -la "/Library/Audio/Plug-Ins/VST3/PRI Resonance Suppressor.vst3"
+   ls /Library/Audio/Plug-Ins/Components/PRI\ Resonance\ Suppressor.component
+   ls /Library/Audio/Plug-Ins/VST3/PRI\ Resonance\ Suppressor.vst3
    ```
 
-4. **Validate AU:**
+2. **Validate Audio Unit:**
    ```bash
    auval -v aufx Rsup Prtz
-   # Should show: "AU VALIDATION SUCCEEDED"
    ```
+   Expected output: `AU VALIDATION SUCCEEDED`
 
-5. **Clear AU cache:**
+3. **Rescan Plugins:**
+   - **Logic Pro:** Preferences → Plug-in Manager → Reset & Rescan
+   - **Other DAWs:** Check preferences for plugin rescan option
+
+4. **Clear AU Cache:**
    ```bash
    rm -rf ~/Library/Caches/AudioUnitCache
    killall -9 AudioComponentRegistrar
    ```
 
-### Still having issues?
+5. **Restart your DAW completely**
 
-Open an [issue on GitHub](https://github.com/Makkhus/PRI-Resonance-Suppressor/issues) with:
-- Your macOS version
-- Your DAW and version
-- Output from `auval -v aufx Rsup Prtz`
+### Still Need Help?
 
-## 🗑️ Uninstall
-
-```bash
-# Remove plugins
-sudo rm -rf "/Library/Audio/Plug-Ins/Components/PRI Resonance Suppressor.component"
-sudo rm -rf "/Library/Audio/Plug-Ins/VST3/PRI Resonance Suppressor.vst3"
-
-# Remove settings (optional)
-rm -rf "$HOME/Library/Application Support/PRITEZZA"
-```
-
-## ⚡ Performance
-
-### Benchmarks (Apple Silicon M1)
-- **CPU Usage**: < 1% for audio processing
-- **Display Rendering**: 1-3% (adjustable via DISPLAY RATE setting)
-- **Cold Open Time**: ~25ms
-- **Warm Open Time**: ~12ms
-- **Initialization**: < 0.1ms
-
-### Latency (Auto-compensated by DAW)
-- **1024 samples**: 23ms @ 44.1kHz, 21ms @ 48kHz
-- **2048 samples**: 46ms @ 44.1kHz, 43ms @ 48kHz
-- **4096 samples**: 93ms @ 44.1kHz, 85ms @ 48kHz
-
-### Supported Sample Rates
-- 11.025 kHz to 192 kHz
-- HI-RES FFT mode maintains resolution at higher sample rates
-
-## 📄 License
-
-Copyright (C) 2026 PRITEZZA
-
-This program is free software: you can redistribute it and/or modify it under the terms of the GNU Affero General Public License version 3 (AGPLv3).
-
-Built with [JUCE](https://juce.com) framework under AGPLv3.
-
-## 🙏 Credits
-
-- **Original Plugin**: [PRITEZZA](https://github.com/pritezza)
-- **macOS ARM Port**: This fork
-- **Framework**: [JUCE](https://github.com/juce-framework/JUCE)
-
-## 🔗 Links
-
-- [Original Repository](https://github.com/pritezza/PRIResonanceSuppressor)
-- [JUCE Framework](https://juce.com)
-- [Issue Tracker](https://github.com/Makkhus/PRI-Resonance-Suppressor/issues)
-
-## 📸 Screenshots
-
-![PRI Resonance Suppressor](docs/images/hero.gif)
-
-*Real-time resonance detection and suppression*
+[Open an issue](https://github.com/Makkhus/PRI-Resonance-Suppressor/issues) with:
+- macOS version
+- DAW name and version
+- Output from validation command
 
 ---
 
-**Made with ❤️ for Apple Silicon**
+## 🗑️ Uninstallation
+
+```bash
+sudo rm -rf "/Library/Audio/Plug-Ins/Components/PRI Resonance Suppressor.component"
+sudo rm -rf "/Library/Audio/Plug-Ins/VST3/PRI Resonance Suppressor.vst3"
+rm -rf "$HOME/Library/Application Support/PRITEZZA"
+```
+
+---
+
+## 📄 License
+
+**GNU Affero General Public License v3.0 (AGPLv3)**
+
+This software is free to use, modify, and distribute under the terms of the AGPLv3 license. See [LICENSE](LICENSE) for full details.
+
+**Third-Party Software:**
+- Built with [JUCE Framework](https://juce.com) (AGPLv3)
+- See [THIRD_PARTY_NOTICES.txt](THIRD_PARTY_NOTICES.txt) for complete attribution
+
+---
+
+## 🙏 Credits
+
+**Original Plugin:** [PRITEZZA](https://github.com/pritezza/PRIResonanceSuppressor) (Windows version)
+
+**macOS Port:** This repository - Universal Binary for Apple Silicon & Intel
+
+**Framework:** [JUCE](https://juce.com) - Cross-platform audio plugin framework
+
+---
+
+## 🔗 Links
+
+- **[Download Latest Release](https://github.com/Makkhus/PRI-Resonance-Suppressor/releases/latest)**
+- **[Report Issues](https://github.com/Makkhus/PRI-Resonance-Suppressor/issues)**
+- **[Original Windows Version](https://github.com/pritezza/PRIResonanceSuppressor)**
+- **[Source Code](https://github.com/Makkhus/PRI-Resonance-Suppressor)**
+
+---
+
+## 📸 Screenshots
+
+![PRI Resonance Suppressor Interface](docs/images/hero.gif)
+
+*Real-time resonance detection and suppression with visual feedback*
+
+---
+
+<div align="center">
+
+**Made with ❤️ for the macOS audio community**
+
+**Fully validated by Apple • Professional quality • Free & Open Source**
+
+[⬇️ Download Now](https://github.com/Makkhus/PRI-Resonance-Suppressor/releases/latest)
+
+</div>
