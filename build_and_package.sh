@@ -49,8 +49,9 @@ echo "Building ${PLUGIN_NAME}..."
 cmake --build "${BUILD_DIR}" --config "${BUILD_TYPE}" --parallel
 
 # Verify the builds exist
-AU_BUNDLE="${BUILD_DIR}/${PLUGIN_NAME}_artefacts/${BUILD_TYPE}/AU/${PLUGIN_NAME}.component"
-VST3_BUNDLE="${BUILD_DIR}/${PLUGIN_NAME}_artefacts/${BUILD_TYPE}/VST3/${PLUGIN_NAME}.vst3"
+# Note: The actual plugin name has spaces: "PRI Resonance Suppressor"
+AU_BUNDLE="${BUILD_DIR}/${PLUGIN_NAME}_artefacts/${BUILD_TYPE}/AU/PRI Resonance Suppressor.component"
+VST3_BUNDLE="${BUILD_DIR}/${PLUGIN_NAME}_artefacts/${BUILD_TYPE}/VST3/PRI Resonance Suppressor.vst3"
 
 if [ ! -d "${AU_BUNDLE}" ]; then
     echo "ERROR: AU component not found at ${AU_BUNDLE}"
@@ -65,8 +66,8 @@ fi
 # Verify architectures
 echo ""
 echo "Verifying universal binary architectures..."
-AU_BINARY="${AU_BUNDLE}/Contents/MacOS/${PLUGIN_NAME}"
-VST3_BINARY="${VST3_BUNDLE}/Contents/MacOS/${PLUGIN_NAME}"
+AU_BINARY="${AU_BUNDLE}/Contents/MacOS/PRI Resonance Suppressor"
+VST3_BINARY="${VST3_BUNDLE}/Contents/MacOS/PRI Resonance Suppressor"
 
 echo "AU architectures:"
 lipo -info "${AU_BINARY}"
