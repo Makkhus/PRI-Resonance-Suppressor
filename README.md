@@ -6,82 +6,54 @@ This is a fully-functional macOS port of the [original PRI Resonance Suppressor]
 
 ## ✅ **Fully Validated & Production Ready**
 
-This plugin has passed **Apple's complete AU validation** with all tests successful:
-- ✅ Component registration and identification
-- ✅ All 14 parameters working with automation
-- ✅ Audio rendering at all sample rates (11 kHz - 192 kHz)
-- ✅ Channel layout support (Mono, Stereo, Binaural)
-- ✅ Custom Cocoa UI interface
-- ✅ MIDI handling
-- ✅ Zero audio processing errors
+This plugin has passed **Apple's complete AU validation** with all tests successful.
 
 **Validation output:** `AU VALIDATION SUCCEEDED`
 
-## 🎯 What's New in This Fork
+## 🎯 What's Included
 
-- ✅ **Universal Binary** - Works natively on Apple Silicon AND Intel Macs
 - ✅ **Audio Unit (AU)** - Native format for Logic Pro, GarageBand, Final Cut Pro
 - ✅ **VST3** - Cross-platform compatibility with all major DAWs
+- ✅ **Universal Binary** - Works natively on Apple Silicon AND Intel Macs
 - ✅ **Apple-validated** - Passes all AU validation tests
-- ✅ **One-command build** - Automated build script handles everything
-- ✅ **One-command install** - Automated installer with proper signing
-- ✅ **Complete AU fix tools** - Diagnostic and repair scripts included
-- ✅ **Comprehensive documentation** - Complete guides for building and using
+- ✅ **Professional PKG installer** - Native macOS installation wizard
 
-## 🚀 Quick Start
+## 🚀 Installation
 
-### Prerequisites
+### Download the Installer
 
-1. **macOS 11 (Big Sur) or later**
-2. **Xcode Command Line Tools**:
-   ```bash
-   xcode-select --install
-   ```
-3. **CMake**:
-   ```bash
-   brew install cmake
-   ```
+Download the latest release from the [Releases page](https://github.com/Makkhus/PRI-Resonance-Suppressor/releases):
 
-### Build and Create Installer
+**[PRI-Resonance-Suppressor-1.0.0-macOS.pkg](https://github.com/Makkhus/PRI-Resonance-Suppressor/releases)** (~10 MB)
 
-```bash
-# Clone the repository
-git clone https://github.com/Makkhus/PRI-Resonance-Suppressor.git
-cd PRI-Resonance-Suppressor
+### Install
 
-# Build universal binary (Apple Silicon + Intel)
-./build_macos_arm.sh Release universal
+1. **Download** the .pkg file
+2. **Double-click** to open the installer
+3. **Follow** the installation wizard
+4. **Restart** your DAW
 
-# Create PKG installer
-./create_pkg_installer.sh
-
-# The installer will be in: build/pkg/PRI-Resonance-Suppressor-1.0.0-macOS.pkg
-```
-
-### Install the Plugin
-
-Double-click the `.pkg` file and follow the installation wizard. The installer will:
-- ✅ Install Audio Unit (AU) to `/Library/Audio/Plug-Ins/Components/`
+The installer will automatically:
+- ✅ Install Audio Unit to `/Library/Audio/Plug-Ins/Components/`
 - ✅ Install VST3 to `/Library/Audio/Plug-Ins/VST3/`
-- ✅ Automatically sign plugins
+- ✅ Sign the plugins
 - ✅ Clear AU cache
 - ✅ Set proper permissions
 
-Then restart your DAW and look for **PRI Resonance Suppressor** by PRITEZZA.
+### Verify Installation
 
-### Validate Installation
-
+Open Terminal and run:
 ```bash
-# Verify AU plugin passes Apple validation
 auval -v aufx Rsup Prtz
-
-# Should output: "AU VALIDATION SUCCEEDED"
 ```
+
+You should see: **"AU VALIDATION SUCCEEDED"**
 
 ## 📖 Documentation
 
-- **[PKG_INSTALLER_GUIDE.md](PKG_INSTALLER_GUIDE.md)** - PKG installer creation guide
 - **[README.ja.md](README.ja.md)** - Japanese README (original)
+- **[Source Code](Source/)** - Plugin source code
+- **[Original Repository](https://github.com/pritezza/PRIResonanceSuppressor)** - Windows version
 
 ## ✨ Features
 
@@ -154,61 +126,40 @@ Tested and working with:
 ### Settings
 - `~/Library/Application Support/PRITEZZA/PRIResonanceSuppressor.settings`
 
-## 🔧 Build Options
-
-### Universal Binary (Recommended)
-```bash
-./build_macos_arm.sh Release universal
-```
-**Best for:** Maximum compatibility - works on Apple Silicon AND Intel Macs
-
-### ARM64 Only Build
-```bash
-./build_macos_arm.sh
-```
-**Best for:** Smaller file size, Apple Silicon only
-
-### Debug Build
-```bash
-./build_macos_arm.sh Debug
-```
-**Best for:** Development and debugging
-
 ## 🐛 Troubleshooting
 
 ### Plugin not showing in DAW?
 
-1. **Check installation:**
+1. **Restart your DAW completely**
+
+2. **For Logic Pro:**
+   - Open Logic Pro → Preferences → Plug-in Manager
+   - Click "Reset & Rescan Selection"
+
+3. **Verify installation:**
    ```bash
    ls -la "/Library/Audio/Plug-Ins/Components/PRI Resonance Suppressor.component"
    ls -la "/Library/Audio/Plug-Ins/VST3/PRI Resonance Suppressor.vst3"
    ```
 
-2. **Validate AU:**
+4. **Validate AU:**
    ```bash
    auval -v aufx Rsup Prtz
    # Should show: "AU VALIDATION SUCCEEDED"
    ```
 
-3. **Clear AU cache:**
+5. **Clear AU cache:**
    ```bash
    rm -rf ~/Library/Caches/AudioUnitCache
    killall -9 AudioComponentRegistrar
    ```
 
-4. **Restart your DAW completely**
+### Still having issues?
 
-5. **For Logic Pro:**
-   - Open Logic Pro → Preferences → Plug-in Manager
-   - Click "Reset & Rescan Selection"
-
-### Build errors?
-
-1. Verify Xcode tools: `xcode-select -p`
-2. Update CMake: `brew upgrade cmake`
-3. Clean build: `rm -rf build && ./build_macos_arm.sh Release universal`
-
-See [PKG_INSTALLER_GUIDE.md](PKG_INSTALLER_GUIDE.md) for more troubleshooting.
+Open an [issue on GitHub](https://github.com/Makkhus/PRI-Resonance-Suppressor/issues) with:
+- Your macOS version
+- Your DAW and version
+- Output from `auval -v aufx Rsup Prtz`
 
 ## 🗑️ Uninstall
 
