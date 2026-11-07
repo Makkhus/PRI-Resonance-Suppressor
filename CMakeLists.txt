@@ -31,9 +31,12 @@ juce_add_plugin(PRIResonanceSuppressor
     COPY_PLUGIN_AFTER_BUILD FALSE)
 
 # JUCE は DLL のバージョン情報（.rc）を一度作ると作り直さないので、VERSION を含む Info.txt が変わったら作り直す
-get_target_property(priGeneratedDir PRIResonanceSuppressor JUCE_GENERATED_SOURCES_DIRECTORY)
-get_target_property(priInfoFile PRIResonanceSuppressor JUCE_INFO_FILE)
-add_custom_command(OUTPUT "${priGeneratedDir}/PRIResonanceSuppressor_resources.rc" APPEND DEPENDS "${priInfoFile}")
+# Note: .rc files are Windows-only, so only add this custom command on Windows
+if(WIN32)
+    get_target_property(priGeneratedDir PRIResonanceSuppressor JUCE_GENERATED_SOURCES_DIRECTORY)
+    get_target_property(priInfoFile PRIResonanceSuppressor JUCE_INFO_FILE)
+    add_custom_command(OUTPUT "${priGeneratedDir}/PRIResonanceSuppressor_resources.rc" APPEND DEPENDS "${priInfoFile}")
+endif()
 
 target_sources(PRIResonanceSuppressor PRIVATE
     Source/PluginProcessor.cpp
