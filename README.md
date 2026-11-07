@@ -32,7 +32,7 @@ This plugin has passed **Apple's complete AU validation** with all tests success
 
 ### Prerequisites
 
-1. **macOS 11 (Big Sur) or later** with Apple Silicon
+1. **macOS 11 (Big Sur) or later**
 2. **Xcode Command Line Tools**:
    ```bash
    xcode-select --install
@@ -42,61 +42,32 @@ This plugin has passed **Apple's complete AU validation** with all tests success
    brew install cmake
    ```
 
-### Build and Install Universal Binary
+### Build and Create Installer
 
 ```bash
 # Clone the repository
 git clone https://github.com/Makkhus/PRI-Resonance-Suppressor.git
 cd PRI-Resonance-Suppressor
 
-# Build universal binary (works on BOTH Apple Silicon AND Intel Macs)
+# Build universal binary (Apple Silicon + Intel)
 ./build_macos_arm.sh Release universal
 
-# Install with complete AU fix
-sudo ./fix_au_complete.sh
-```
-
-That's it! Restart your DAW and look for **PRI Resonance Suppressor** by PRITEZZA.
-
-### Or Use Professional Installers (Recommended for Distribution)
-
-#### Option 1: PKG Installer (Native macOS)
-
-```bash
-# Build the plugin first
-./build_macos_arm.sh Release universal
-
-# Create a professional .pkg installer with GUI wizard
+# Create PKG installer
 ./create_pkg_installer.sh
 
-# The PKG will be in: build/pkg/PRI-Resonance-Suppressor-1.0.0-macOS.pkg
+# The installer will be in: build/pkg/PRI-Resonance-Suppressor-1.0.0-macOS.pkg
 ```
 
-**Features:**
-- ✅ Native macOS installer wizard with GUI
-- ✅ Welcome, ReadMe, License screens
-- ✅ Automatic system-level installation
-- ✅ Professional appearance
-- ✅ macOS compatibility checking
+### Install the Plugin
 
-See [PKG_INSTALLER_GUIDE.md](PKG_INSTALLER_GUIDE.md) for details.
+Double-click the `.pkg` file and follow the installation wizard. The installer will:
+- ✅ Install Audio Unit (AU) to `/Library/Audio/Plug-Ins/Components/`
+- ✅ Install VST3 to `/Library/Audio/Plug-Ins/VST3/`
+- ✅ Automatically sign plugins
+- ✅ Clear AU cache
+- ✅ Set proper permissions
 
-#### Option 2: DMG Installer (Traditional)
-
-```bash
-# Create a DMG disk image
-./create_installer.sh
-
-# The DMG will be in: build/dmg/PRI-Resonance-Suppressor-1.0.0-macOS.dmg
-```
-
-**Features:**
-- ✅ Drag-and-drop interface
-- ✅ Install.command and Uninstall.command scripts
-- ✅ Complete documentation included
-- ✅ Custom disk image layout
-
-See [DMG_INSTALLER_GUIDE.md](DMG_INSTALLER_GUIDE.md) for details.
+Then restart your DAW and look for **PRI Resonance Suppressor** by PRITEZZA.
 
 ### Validate Installation
 
@@ -109,10 +80,8 @@ auval -v aufx Rsup Prtz
 
 ## 📖 Documentation
 
-- **[QUICKSTART_MACOS.txt](QUICKSTART_MACOS.txt)** - Quick reference guide
-- **[README_MACOS.md](README_MACOS.md)** - Complete user guide with features and usage
-- **[BUILD_MACOS.md](BUILD_MACOS.md)** - Detailed build instructions
-- **[MACOS_SETUP_SUMMARY.md](MACOS_SETUP_SUMMARY.md)** - Technical details of macOS port
+- **[PKG_INSTALLER_GUIDE.md](PKG_INSTALLER_GUIDE.md)** - PKG installer creation guide
+- **[README.ja.md](README.ja.md)** - Japanese README (original)
 
 ## ✨ Features
 
@@ -187,11 +156,11 @@ Tested and working with:
 
 ## 🔧 Build Options
 
-### Universal Binary - Recommended (Intel + ARM)
+### Universal Binary (Recommended)
 ```bash
 ./build_macos_arm.sh Release universal
 ```
-**Best for:** Maximum compatibility - works on all Macs
+**Best for:** Maximum compatibility - works on Apple Silicon AND Intel Macs
 
 ### ARM64 Only Build
 ```bash
@@ -199,82 +168,47 @@ Tested and working with:
 ```
 **Best for:** Smaller file size, Apple Silicon only
 
-### Debug Build (Faster compilation)
+### Debug Build
 ```bash
 ./build_macos_arm.sh Debug
 ```
 **Best for:** Development and debugging
 
-### Manual Build
-See [BUILD_MACOS.md](BUILD_MACOS.md) for detailed manual build instructions.
-
-## 🛠️ AU Troubleshooting Tools
-
-### Debug AU Issues
-```bash
-./debug_au.sh
-```
-Runs comprehensive diagnostics on the AU component.
-
-### Complete AU Fix
-```bash
-sudo ./fix_au_complete.sh
-```
-Performs complete AU installation with:
-- Code signing
-- Cache clearing
-- System registration
-- Validation
-
-### Verify AU Works
-```bash
-auval -v aufx Rsup Prtz
-```
-Should show: **"AU VALIDATION SUCCEEDED"**
-
 ## 🐛 Troubleshooting
 
-### AU Plugin not showing in Logic Pro?
+### Plugin not showing in DAW?
 
-**Quick Fix:**
-```bash
-# Run the complete AU fix script
-sudo ./fix_au_complete.sh
+1. **Check installation:**
+   ```bash
+   ls -la "/Library/Audio/Plug-Ins/Components/PRI Resonance Suppressor.component"
+   ls -la "/Library/Audio/Plug-Ins/VST3/PRI Resonance Suppressor.vst3"
+   ```
 
-# Then restart Logic Pro and rescan plugins
-```
+2. **Validate AU:**
+   ```bash
+   auval -v aufx Rsup Prtz
+   # Should show: "AU VALIDATION SUCCEEDED"
+   ```
 
-**Manual Steps:**
-1. Verify installation: `ls -la "/Library/Audio/Plug-Ins/Components/PRI Resonance Suppressor.component"`
-2. Check validation: `auval -v aufx Rsup Prtz` (should show "PASS")
-3. Clear AU cache: `rm -rf ~/Library/Caches/AudioUnitCache`
-4. Kill cache process: `killall -9 AudioComponentRegistrar`
-5. Restart Logic Pro → Preferences → Plug-in Manager → Reset & Rescan
+3. **Clear AU cache:**
+   ```bash
+   rm -rf ~/Library/Caches/AudioUnitCache
+   killall -9 AudioComponentRegistrar
+   ```
 
-### VST3 working but AU not?
+4. **Restart your DAW completely**
 
-AU requires system-wide installation:
-```bash
-# Must be in /Library (not ~/Library)
-sudo cp -R "build/PRIResonanceSuppressor_artefacts/Release/AU/PRI Resonance Suppressor.component" "/Library/Audio/Plug-Ins/Components/"
-sudo xattr -cr "/Library/Audio/Plug-Ins/Components/PRI Resonance Suppressor.component"
-sudo codesign --force --deep --sign - --options runtime "/Library/Audio/Plug-Ins/Components/PRI Resonance Suppressor.component"
-```
+5. **For Logic Pro:**
+   - Open Logic Pro → Preferences → Plug-in Manager
+   - Click "Reset & Rescan Selection"
 
 ### Build errors?
+
 1. Verify Xcode tools: `xcode-select -p`
 2. Update CMake: `brew upgrade cmake`
 3. Clean build: `rm -rf build && ./build_macos_arm.sh Release universal`
 
-### Validation fails?
-```bash
-# Run diagnostics
-./debug_au.sh
-
-# Check the output for specific errors
-```
-
-See [BUILD_MACOS.md](BUILD_MACOS.md) for more troubleshooting.
+See [PKG_INSTALLER_GUIDE.md](PKG_INSTALLER_GUIDE.md) for more troubleshooting.
 
 ## 🗑️ Uninstall
 
