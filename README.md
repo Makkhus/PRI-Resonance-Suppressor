@@ -58,24 +58,43 @@ sudo ./fix_au_complete.sh
 
 That's it! Restart your DAW and look for **PRI Resonance Suppressor** by PRITEZZA.
 
-### Or Use the DMG Installer (Recommended for Distribution)
+### Or Use Professional Installers (Recommended for Distribution)
+
+#### Option 1: PKG Installer (Native macOS)
 
 ```bash
 # Build the plugin first
 ./build_macos_arm.sh Release universal
 
-# Create a professional DMG installer
+# Create a professional .pkg installer with GUI wizard
+./create_pkg_installer.sh
+
+# The PKG will be in: build/pkg/PRI-Resonance-Suppressor-1.0.0-macOS.pkg
+```
+
+**Features:**
+- ✅ Native macOS installer wizard with GUI
+- ✅ Welcome, ReadMe, License screens
+- ✅ Automatic system-level installation
+- ✅ Professional appearance
+- ✅ macOS compatibility checking
+
+See [PKG_INSTALLER_GUIDE.md](PKG_INSTALLER_GUIDE.md) for details.
+
+#### Option 2: DMG Installer (Traditional)
+
+```bash
+# Create a DMG disk image
 ./create_installer.sh
 
 # The DMG will be in: build/dmg/PRI-Resonance-Suppressor-1.0.0-macOS.dmg
 ```
 
-The DMG includes:
-- ✅ Audio Unit and VST3 plugins
-- ✅ Automated Install.command script
-- ✅ Automated Uninstall.command script
-- ✅ Complete documentation
-- ✅ Professional presentation
+**Features:**
+- ✅ Drag-and-drop interface
+- ✅ Install.command and Uninstall.command scripts
+- ✅ Complete documentation included
+- ✅ Custom disk image layout
 
 See [DMG_INSTALLER_GUIDE.md](DMG_INSTALLER_GUIDE.md) for details.
 
