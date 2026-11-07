@@ -22,13 +22,17 @@ juce_add_plugin(PRIResonanceSuppressor
     PLUGIN_CODE Rsup                # プラグインごとに別の値
     FORMATS VST3 AU
     VST3_CATEGORIES Fx Dynamics
+    AU_MAIN_TYPE kAudioUnitType_Effect
     IS_SYNTH FALSE
     NEEDS_MIDI_INPUT FALSE
     NEEDS_MIDI_OUTPUT FALSE
     IS_MIDI_EFFECT FALSE
     EDITOR_WANTS_KEYBOARD_FOCUS FALSE
     # C:\Program Files\Common Files\VST3 へのコピーは管理者権限が要るので行わない（README 参照）
-    COPY_PLUGIN_AFTER_BUILD FALSE)
+    COPY_PLUGIN_AFTER_BUILD FALSE
+    # macOS specific settings
+    HARDENED_RUNTIME_ENABLED TRUE
+    HARDENED_RUNTIME_OPTIONS "com.apple.security.cs.disable-library-validation")
 
 # JUCE は DLL のバージョン情報（.rc）を一度作ると作り直さないので、VERSION を含む Info.txt が変わったら作り直す
 # Note: .rc files are Windows-only, so only add this custom command on Windows
@@ -71,6 +75,14 @@ option(PRI_ENABLE_LTO "Enable link-time optimisation" ON)
 
 if(PRI_ENABLE_LTO)
     target_link_libraries(PRIResonanceSuppressor PUBLIC juce::juce_recommended_lto_flags)
+endif()
+
+# macOS: Code sign AU component after build to fix validation issues
+if(APPLE)
+    add_custom_command(TARGET PRIResonanceSuppressor_AU POST_BUILD
+        COMMAND codesign --force --deep --sign - "$<TARGET_BUNDLE_DIR:PRIResonanceSuppressor_AU>"
+        COMMENT "Ad-hoc signing AU component for macOS validation"
+        VERBATIM)
 endif()
 
 # 開発用のツール（以下）は -DPRI_BUILD_TOOLS=ON のときだけ作る（docs/DEVELOPMENT.md 参照）
