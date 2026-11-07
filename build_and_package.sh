@@ -21,7 +21,11 @@ VST3_INSTALL_DIR="/Library/Audio/Plug-Ins/VST3"
 # Clean previous build
 echo ""
 echo "Cleaning previous build..."
-rm -rf "${BUILD_DIR}"
+# Change permissions to allow deletion if previous build exists
+if [ -d "${BUILD_DIR}" ]; then
+    chmod -R u+w "${BUILD_DIR}" 2>/dev/null || true
+    rm -rf "${BUILD_DIR}"
+fi
 mkdir -p "${BUILD_DIR}"
 
 # Configure with CMake for universal binary
