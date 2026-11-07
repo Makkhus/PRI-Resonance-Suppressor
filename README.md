@@ -1,5 +1,7 @@
 # PRI Resonance Suppressor
 
+![PRI Resonance Suppressor Interface](docs/images/hero.gif)
+
 **Professional Spectral Resonance Suppressor for macOS**
 
 [![macOS](https://img.shields.io/badge/macOS-11%2B-blue)](https://www.apple.com/macos/)
@@ -231,13 +233,6 @@ This software is free to use, modify, and distribute under the terms of the AGPL
 - **[Original Windows Version](https://github.com/pritezza/PRIResonanceSuppressor)**
 - **[Source Code](https://github.com/Makkhus/PRI-Resonance-Suppressor)**
 
----
-
-## 📸 Screenshots
-
-![PRI Resonance Suppressor Interface](docs/images/hero.gif)
-
-*Real-time resonance detection and suppression with visual feedback*
 
 ---
 
