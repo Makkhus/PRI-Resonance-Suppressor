@@ -23,8 +23,15 @@ echo ""
 echo "Cleaning previous build..."
 # Change permissions to allow deletion if previous build exists
 if [ -d "${BUILD_DIR}" ]; then
-    chmod -R u+w "${BUILD_DIR}" 2>/dev/null || true
-    rm -rf "${BUILD_DIR}"
+    echo "Removing old build directory (may require sudo for signed files)..."
+    find "${BUILD_DIR}" -type d -exec chmod u+rwx {} + 2>/dev/null || true
+    find "${BUILD_DIR}" -type f -exec chmod u+rw {} + 2>/dev/null || true
+    rm -rf "${BUILD_DIR}" 2>/dev/null || {
+        echo "Warning: Could not remove build directory with normal permissions."
+        echo "Please run: sudo rm -rf ${BUILD_DIR}"
+        echo "Then run this script again."
+        exit 1
+    }
 fi
 mkdir -p "${BUILD_DIR}"
 
